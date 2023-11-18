@@ -11,6 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("AppConnection")
     ));
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // automapper
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
