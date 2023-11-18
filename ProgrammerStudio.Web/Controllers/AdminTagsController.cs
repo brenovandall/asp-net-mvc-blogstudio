@@ -88,4 +88,20 @@ public class AdminTagsController : Controller
 
         return RedirectToAction("Edit", new { id = editTagModel.Id }); // else, will be in the same page, the readonly id will be the editTagModel ID
     }
+
+    [HttpPost]
+    public IActionResult Delete(Guid id)
+    {
+        var tag = _context.Tags.FirstOrDefault(x => x.Id == id); // takes the id on tags table
+
+        if (tag != null)
+        {
+            _context.Tags.Remove(tag); // remove from database
+            _context.SaveChanges();
+
+            return RedirectToAction("List"); // returns the application to the list
+        }
+
+        return RedirectToAction("List");
+    }
 }
