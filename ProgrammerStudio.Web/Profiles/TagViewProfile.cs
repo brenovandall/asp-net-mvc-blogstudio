@@ -10,5 +10,6 @@ public class TagViewProfile : Profile
     public TagViewProfile()
     {
         CreateMap<AddTagModel, BlogTag>();
+        CreateMap<EditTagModel, BlogTag>();
     }
 }

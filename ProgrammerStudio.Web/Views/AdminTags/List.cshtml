@@ -1,0 +1,43 @@
+﻿@model List<ProgrammerStudio.Web.Models.Domain.BlogTag>
+
+@{
+}
+
+
+<div class="container">
+    <div>
+        <h1 class="text-dark fs-1">Show the tags list - Adminstrator</h1>
+    </div>
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Display Name</th>
+                </tr>
+            </thead>
+            <tbody>    
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <th scope="col">@item.Id</th>
+                        <th scope="col">@item.Name</th>
+                        <th scope="col">@item.DisplayName</th>
+                        <th scope="col">
+                            <a asp-area="" asp-controller="AdminTags" asp-action="Edit" asp-route-id="@item.Id">
+                                Edit
+                            </a>
+                        </th>
+                    </tr>
+                    }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>The list of tags is empty!</p>
+    }
+    
+</div>

@@ -1,0 +1,27 @@
+﻿@model ProgrammerStudio.Web.Models.ViewModels.EditTagModel
+@{
+}
+
+
+<div class="container">
+    <div>
+        <h1 class="text-dark fs-1">Edit Tags - Adminstrator</h1>
+    </div>
+    <div>
+        <form method="post">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">ID</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" asp-for="@Model.Id" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" asp-for="@Model.Name">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Display Name</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" asp-for="@Model.DisplayName">
+            </div>
+            <button type="submit" class="btn btn-primary" asp-area="" asp-controller="AdminTags" asp-action="Edit">Update Tag</button>
+        </form>
+    </div>
+</div>
