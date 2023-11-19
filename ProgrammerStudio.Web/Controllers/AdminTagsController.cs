@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models.Domain;
@@ -26,27 +27,27 @@ public class AdminTagsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(AddTagModel addTagModel)
+    public async Task<IActionResult> Add(AddTagModel addTagModel)
     {
         BlogTag tag = _mapper.Map<BlogTag>(addTagModel); // automap a tag view model to a tag
-        _context.Tags.Add(tag); // add to tags on the db context
-        _context.SaveChanges(); // save db changes
+        await _context.Tags.AddAsync(tag); // add to tags on the db context
+        await _context.SaveChangesAsync(); // save db changes
 
         return RedirectToAction("List");
     }
 
     [HttpGet]
-    public IActionResult List()
+    public async Task<IActionResult> List()
     {
-        var tags = _context.Tags.ToList(); // list all the tags
+        var tags = await _context.Tags.ToListAsync(); // list all the tags
 
         return View(tags);
     }
 
     [HttpGet]
-    public IActionResult Edit(Guid id)
+    public async Task<IActionResult> Edit(Guid id)
     {
-        var tag = _context.Tags.FirstOrDefault(x => x.Id == id); // take the same tag ig
+        var tag = await _context.Tags.FirstOrDefaultAsync(x => x.Id == id); // take the same tag ig
 
         if (tag != null)
         {
@@ -65,7 +66,7 @@ public class AdminTagsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Edit(EditTagModel editTagModel)
+    public async Task<IActionResult> Edit(EditTagModel editTagModel)
     {
         // create a new tag with the new info, using manual mapper rn
         BlogTag tag = new()
@@ -75,14 +76,14 @@ public class AdminTagsController : Controller
             DisplayName = editTagModel.DisplayName
         };
 
-        var oldTag = _context.Tags.FirstOrDefault(x => x.Id == tag.Id); // the old tag that exists on database
+        var oldTag = await _context.Tags.FirstOrDefaultAsync(x => x.Id == tag.Id); // the old tag that exists on database
 
         if (oldTag != null)
         {
             oldTag.Name = tag.Name;
             oldTag.DisplayName = tag.DisplayName;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("List"); // redirect to the list of tags
         }
 
@@ -90,14 +91,14 @@ public class AdminTagsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
-        var tag = _context.Tags.FirstOrDefault(x => x.Id == id); // takes the id on tags table
+        var tag = await _context.Tags.FirstOrDefaultAsync(x => x.Id == id); // takes the id on tags table
 
         if (tag != null)
         {
             _context.Tags.Remove(tag); // remove from database
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("List"); // returns the application to the list
         }
