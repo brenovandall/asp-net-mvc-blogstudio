@@ -14,5 +14,5 @@ public class AddBlogModel
     public string Author { get; set; }
     public bool Visible { get; set; }
     public IEnumerable<SelectListItem>? Tags { get; set; } // list of tags
-    public string SelectedTags { get; set; }
+    public string[] SelectedTags { get; set; } = Array.Empty<string>();
 }
