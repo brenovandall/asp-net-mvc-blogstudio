@@ -1,0 +1,44 @@
+﻿@model List<ProgrammerStudio.Web.Models.Domain.BlogPost>
+
+@{
+}
+
+<div class="container">
+    <div>
+        <h1 class="text-dark fs-1">Show All Posts - Adminstrator</h1>
+    </div>
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Tags</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="col">@item.Id</th>
+                        <th scope="col">@item.Title</th>
+                        <th scope="col">
+                            @foreach (var tags in item.BlogTags)
+                            {
+                                <div class="d-flex">
+                                    <span class="badge bg-secondary gap-1">@tags.DisplayName</span>
+                                </div>
+                            }
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>There are no posts on database!</p>
+    }
+
+</div>

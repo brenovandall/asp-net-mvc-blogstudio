@@ -58,4 +58,12 @@ public class AdminBlogsController : Controller
 
         return RedirectToAction("Add");
     }
+
+    [HttpGet]
+    public async Task<IActionResult> List()
+    {
+        var posts = _context.Posts.Include(x => x.BlogTags).ToListAsync();
+
+        return View(posts);
+    }
 }
