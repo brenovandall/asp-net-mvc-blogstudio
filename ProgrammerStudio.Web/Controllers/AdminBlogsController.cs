@@ -74,16 +74,21 @@ public class AdminBlogsController : Controller
 
         var tags = await _context.Tags.ToListAsync(); // all the tags for selecting tags field
 
+
+        /* 
+         * ***************************************
+         * THIS CODE IS NOT ON USE IN THIS CASE 
+         * *************************************** */
         // List<BlogTag> tags = new();
 
-        string[] tagsArray = new string[post.BlogTags.Count];
-        int index = 0;
+        //string[] tagsArray = new string[post.BlogTags.Count];
+        //int index = 0;
 
-        foreach(var item in post.BlogTags)
-        {
-            tagsArray[index] = item.DisplayName;
-            index++;
-        }
+        //foreach(var item in post.BlogTags)
+        //{
+        //    tagsArray.Append(item.Name);
+        //    index++;
+        //}
 
         //foreach (var item in post.BlogTags)
         //{
@@ -104,10 +109,9 @@ public class AdminBlogsController : Controller
                 PublishDate = post.PublishDate,
                 Author = post.Author,
                 Visible = post.Visible,
-                Tags = tags.Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id.ToString() }) // showing all the tags on select items 
+                Tags = tags.Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id.ToString() }), // showing all the tags on select items 
+                SelectedTags = post.BlogTags.Select(x => x.Id.ToString()).ToArray() // selected tags are displaying here, is an array of tags that user choose
             };
-
-            model.SelectedTags = tagsArray; // this is the selected tags, same old values on Blog Post | if user dont select any other one, the selected tags stills the same
 
             //model.BlogTags = tags;
 
