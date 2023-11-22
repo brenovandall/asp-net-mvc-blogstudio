@@ -31,6 +31,11 @@
                                 </div>
                             }
                         </th>
+                        <th scope="col">
+                            <a asp-area="" asp-controller="AdminBlogs" asp-action="Edit" asp-route-id="@item.Id">
+                                Edit
+                            </a>
+                        </th>
                     </tr>
                 }
             </tbody>

@@ -66,4 +66,54 @@ public class AdminBlogsController : Controller
 
         return View(posts);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(Guid id)
+    {
+        var post = await _context.Posts.Include(x => x.BlogTags).FirstOrDefaultAsync(x => x.Id == id); // all the posts
+
+        var tags = await _context.Tags.ToListAsync(); // all the tags for selecting tags field
+
+        // List<BlogTag> tags = new();
+
+        string[] tagsArray = new string[post.BlogTags.Count];
+        int index = 0;
+
+        foreach(var item in post.BlogTags)
+        {
+            tagsArray[index] = item.DisplayName;
+            index++;
+        }
+
+        //foreach (var item in post.BlogTags)
+        //{
+        //    tags.Add(item);
+        //}
+
+        if (post != null)
+        {
+            EditBlogModel model = new()
+            {
+                Id = post.Id,
+                Heading = post.Heading,
+                Title = post.Title,
+                Content = post.Content,
+                Description = post.Description,
+                ImageUrl = post.ImageUrl,
+                UrlHandle = post.UrlHandle,
+                PublishDate = post.PublishDate,
+                Author = post.Author,
+                Visible = post.Visible,
+                Tags = tags.Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id.ToString() }) // showing all the tags on select items 
+            };
+
+            model.SelectedTags = tagsArray; // this is the selected tags, same old values on Blog Post | if user dont select any other one, the selected tags stills the same
+
+            //model.BlogTags = tags;
+
+            return View(model);
+        }
+
+        return View(null);
+    }
 }

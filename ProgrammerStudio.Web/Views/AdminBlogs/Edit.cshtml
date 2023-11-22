@@ -1,0 +1,57 @@
+﻿@model ProgrammerStudio.Web.Models.ViewModels.EditBlogModel
+@{
+}
+
+<div class="container">
+    <div>
+        <h1 class="text-dark fs-1">Edit The Post - Adminstrator</h1>
+    </div>
+    <div>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Type the heading</label>
+                <input type="text" class="form-control" id="heading" asp-for="@Model.Heading">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Title of the post</label>
+                <input type="text" class="form-control" id="title" asp-for="@Model.Title">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Content</label>
+                <textarea class="form-control" id="title" asp-for="@Model.Content"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" asp-for="@Model.Description">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Image URL</label>
+                <input type="url" class="form-control" id="image" asp-for="@Model.ImageUrl">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">URL Handle</label>
+                <input type="text" class="form-control" id="url" asp-for="@Model.UrlHandle">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date of publish</label>
+                <input type="date" class="form-control" id="date" asp-for="@Model.PublishDate">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Author of the post</label>
+                <input type="text" class="form-control" id="author" asp-for="@Model.Author">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tags for this posts</label>
+                <select class="form-select" asp-items="@Model.Tags" asp-for="SelectedTags">
+                </select>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label">
+                    The post would be visible? If will be, check this field.
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" asp-area="" asp-controller="AdminBlogs" asp-action="Add">Submit</button>
+        </form>
+    </div>
+</div>
