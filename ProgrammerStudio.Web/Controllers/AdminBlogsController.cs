@@ -156,7 +156,7 @@ public class AdminBlogsController : Controller
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("List");
+            return RedirectToAction("Edit", new { id = editBlogModel.Id });
         }
 
         return RedirectToAction("Edit", new { id = editBlogModel.Id });

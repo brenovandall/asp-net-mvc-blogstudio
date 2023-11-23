@@ -19,7 +19,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Content</label>
-                <textarea class="form-control" id="title" asp-for="@Model.Content"></textarea>
+                <textarea class="form-control" id="content" asp-for="@Model.Content"></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label">Description</label>
@@ -56,3 +56,11 @@
         </form>
     </div>
 </div>
+
+
+@section Scripts {
+    <script>
+        var editorText = new FroalaEditor('#content');
+    </script>
+
+}
