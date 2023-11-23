@@ -159,4 +159,20 @@ public class AdminBlogsController : Controller
 
         return RedirectToAction("Edit", new { id = editBlogModel.Id });
     }
+
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var postThatIsLookingFor = await _context.Posts.FirstOrDefaultAsync(x => x.Id == id);
+
+        if (postThatIsLookingFor != null)
+        {
+            _context.Posts.Remove(postThatIsLookingFor);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("List");
+        }
+
+        return RedirectToAction("List");
+    }
 }
