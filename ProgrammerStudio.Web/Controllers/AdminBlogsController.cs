@@ -124,24 +124,26 @@ public class AdminBlogsController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(EditBlogModel editBlogModel)
     {
+        // this is the blog post that user is looking for update -- >
         var oldBlogPost = await _context.Posts.Include(x => x.BlogTags).FirstOrDefaultAsync(x => x.Id == editBlogModel.Id);
 
         BlogPost post = new();
 
-        List<BlogTag> tags = new();
+        List<BlogTag> tags = new(); // list of tags that was selected on saved post
 
         foreach (var item in editBlogModel.SelectedTags)
         {
             var selectedTag = Guid.Parse(item);
             var tagFromDatabase = await _context.Tags.FirstOrDefaultAsync(x => x.Id == selectedTag);
 
-            tags.Add(tagFromDatabase);
+            tags.Add(tagFromDatabase); // adding the selected tags on the list of tags
         }
 
         if (oldBlogPost != null)
         {
-            var newBlogPost = _mapper.Map<BlogPost>(editBlogModel);
+            var newBlogPost = _mapper.Map<BlogPost>(editBlogModel); // using automapper to map the post view model to a new blog post
 
+            // **** mapping manually the post to up to date information ****
             oldBlogPost.Heading = newBlogPost.Heading;
             oldBlogPost.Title = newBlogPost.Title;
             oldBlogPost.Content = newBlogPost.Content;
@@ -162,8 +164,9 @@ public class AdminBlogsController : Controller
 
     public async Task<IActionResult> Delete(Guid id)
     {
-        var postThatIsLookingFor = await _context.Posts.FirstOrDefaultAsync(x => x.Id == id);
+        var postThatIsLookingFor = await _context.Posts.FirstOrDefaultAsync(x => x.Id == id); // search the post that user is looking for
 
+        // ***** delete post proccess *****
         if (postThatIsLookingFor != null)
         {
             _context.Posts.Remove(postThatIsLookingFor);
