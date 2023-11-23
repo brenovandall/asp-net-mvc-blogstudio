@@ -120,4 +120,43 @@ public class AdminBlogsController : Controller
 
         return View(null);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(EditBlogModel editBlogModel)
+    {
+        var oldBlogPost = await _context.Posts.Include(x => x.BlogTags).FirstOrDefaultAsync(x => x.Id == editBlogModel.Id);
+
+        BlogPost post = new();
+
+        List<BlogTag> tags = new();
+
+        foreach (var item in editBlogModel.SelectedTags)
+        {
+            var selectedTag = Guid.Parse(item);
+            var tagFromDatabase = await _context.Tags.FirstOrDefaultAsync(x => x.Id == selectedTag);
+
+            tags.Add(tagFromDatabase);
+        }
+
+        if (oldBlogPost != null)
+        {
+            var newBlogPost = _mapper.Map<BlogPost>(editBlogModel);
+
+            oldBlogPost.Heading = newBlogPost.Heading;
+            oldBlogPost.Title = newBlogPost.Title;
+            oldBlogPost.Content = newBlogPost.Content;
+            oldBlogPost.Description = newBlogPost.Description;
+            oldBlogPost.ImageUrl = newBlogPost.ImageUrl;
+            oldBlogPost.PublishDate = newBlogPost.PublishDate;
+            oldBlogPost.Author = newBlogPost.Author;
+            oldBlogPost.Visible = newBlogPost.Visible;
+            oldBlogPost.BlogTags = tags;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("List");
+        }
+
+        return RedirectToAction("Edit", new { id = editBlogModel.Id });
+    }
 }
