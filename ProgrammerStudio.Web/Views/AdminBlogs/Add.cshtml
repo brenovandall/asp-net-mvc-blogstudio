@@ -26,6 +26,11 @@
                 <input type="text" class="form-control" id="description" asp-for="@Model.Description">
             </div>
             <div class="mb-3">
+                <label class="form-label">Select the Thumbnail Image</label>
+                <input type="file" class="form-control" id="thumbnailImage" >
+                <img id="imageDisplay" src="" style="display:none; width:400px;"/>
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Image URL</label>
                 <input type="url" class="form-control" id="image" asp-for="@Model.ImageUrl">
             </div>
@@ -60,7 +65,38 @@
 
 @section Scripts {
     <script>
-        var editorText = new FroalaEditor('#content');
+        var editorText = new FroalaEditor('#content', {
+            imageUploadURL: '/api/imageapi'
+        });
+
+        const selectedImage = document.querySelector("#thumbnailImage"); 
+        const image = document.querySelector("#image");
+        const imageDisplay = document.querySelector("#imageDisplay");
+
+        async function uploadImage(e) {
+            console.log(e.target.files[0])
+
+            let data = new FormData();
+            data.append('imageFile', e.target.files[0]);
+
+            await fetch('/api/imageapi', {
+                method: 'POST',
+                headers: {
+                    'Aceept': '*/*'
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    image.value = result.link;
+                    imageDisplay.src = result.link;
+                    imageDisplay.style.display = 'block';
+                });
+        }
+
+        selectedImage.addEventListener('change', uploadImage);
+
+
     </script>
 
 }
