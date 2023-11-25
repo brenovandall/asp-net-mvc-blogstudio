@@ -14,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // automapper
 
-//builder.Services.AddScoped<CloudImagesProvider>();
+builder.Services.AddScoped<CloudImagesProvider>();
 
 var app = builder.Build();
 

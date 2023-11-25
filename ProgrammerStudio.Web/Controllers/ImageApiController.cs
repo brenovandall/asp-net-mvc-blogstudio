@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammerStudio.Web.Services;
+using System.Net;
 
 namespace ProgrammerStudio.Web.Controllers;
 
@@ -28,5 +29,7 @@ public class ImageApiController : ControllerBase
         }
 
         return new JsonResult(new { Link = image });
+
     }
+
 }

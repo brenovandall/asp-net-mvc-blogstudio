@@ -1,6 +1,8 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace ProgrammerStudio.Web.Services;
 
@@ -32,7 +34,7 @@ public class CloudImagesProvider
         };
         var uploadResult = await cloudinary.UploadAsync(uploadParams);
 
-        if (uploadResult != null)
+        if (uploadResult != null && uploadResult.StatusCode == HttpStatusCode.OK)
         {
             return uploadResult.SecureUri.ToString();
         }
