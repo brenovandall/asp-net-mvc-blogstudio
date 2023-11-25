@@ -35,5 +35,4 @@ public class ImageApiController : ControllerBase
         return new JsonResult(new { Link = image }); // returns a json that has the url handle for the image
 
     }
-
 }
