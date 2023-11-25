@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProgrammerStudio.Web.Data;
+using ProgrammerStudio.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     ));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // automapper
+
+//builder.Services.AddScoped<CloudImagesProvider>();
 
 var app = builder.Build();
 
