@@ -5,11 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ProgrammerStudio.Web.Services;
-
+/*
+   **********************************************
+    THIS IS THE PROVIDER SERVICE FROM CLOUDINARY
+   ********************************************** 
+*/
 public class CloudImagesProvider
 {
-    private IConfiguration _configuration;
-    private Account _account;
+    private IConfiguration _configuration; // configuration to get the paramethers from the appsettings
+    private Account _account; // cloudinary needs an account with cloudname, the api key and the api secret
 
     public CloudImagesProvider(IConfiguration configuration)
     {
@@ -25,20 +29,21 @@ public class CloudImagesProvider
 
     public async Task<string> UploadImageToCloud(IFormFile imageFile)
     {
-        var cloudinary = new Cloudinary(_account);
+        var cloudinary = new Cloudinary(_account); // new account that cloudinary needs
 
+//    *********** CLOUDINARY UPLOAD PARAMETHERS ***********
         var uploadParams = new ImageUploadParams()
         {
             File = new FileDescription(imageFile.FileName, imageFile.OpenReadStream()),
             DisplayName = imageFile.FileName
         };
-        var uploadResult = await cloudinary.UploadAsync(uploadParams);
+        var uploadResult = await cloudinary.UploadAsync(uploadParams); // upload result that will be returned for the task
 
         if (uploadResult != null && uploadResult.StatusCode == HttpStatusCode.OK)
         {
-            return uploadResult.SecureUri.ToString();
+            return uploadResult.SecureUri.ToString(); // returning the upload result at string format
         }
 
-        return null;
+        return null; // else, it returns null
     }
 }
