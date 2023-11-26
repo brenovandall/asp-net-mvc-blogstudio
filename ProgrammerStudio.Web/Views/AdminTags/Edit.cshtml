@@ -3,28 +3,40 @@
 }
 
 
-<div class="container">
-    <div>
-        <h1 class="text-dark fs-1">Edit Tags - Adminstrator</h1>
+<form method="post">
+    <div class="flex justify-center space-y-12" style="margin-right:15%;margin-left:15%;margin-top:5%;">
+        <div class="border-b border-gray-900/10 pb-12">
+            <h2 class="text-base font-semibold leading-7 text-gray-900">Update Tags - Adminstrator</h2>
+            <p class="mt-1 text-sm leading-6 text-gray-600">Here, as an administrator, you can update any tag that you want to.</p>
+
+            <div class="mt-5">
+                <label class="block text-sm font-medium leading-6 text-gray-900">Id:</label>
+                <div class="relative mt-2 rounded-md shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    </div>
+                    <input type="text" class="block bg-stone-300 w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Type here" asp-for="@Model.Id" readonly>
+                </div>
+            </div>
+            <div class="mt-2">
+                <label class="block text-sm font-medium leading-6 text-gray-900">Updated Tag Name:</label>
+                <div class="relative mt-2 rounded-md shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    </div>
+                    <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Type here" asp-for="@Model.Name">
+                </div>
+            </div>
+            <div class="mt-2">
+                <label class="block text-sm font-medium leading-6 text-gray-900">Updated Display Name:</label>
+                <div class="relative mt-2 rounded-md shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    </div>
+                    <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Type here" asp-for="@Model.DisplayName">
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" asp-area="" asp-controller="AdminTags" asp-action="Edit">Save Changes</button>
+                <button type="submit" class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" asp-area="" asp-controller="AdminTags" asp-action="Delete" asp-route-id="@Model.Id">Delete Tag</button>
+            </div>
+        </div>
     </div>
-    <div>
-        <form method="post">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">ID</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" asp-for="@Model.Id" readonly>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" asp-for="@Model.Name">
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Display Name</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" asp-for="@Model.DisplayName">
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary" asp-area="" asp-controller="AdminTags" asp-action="Edit">Update Tag</button>
-                <button type="submit " class="btn btn-danger" asp-area="" asp-controller="AdminTags" asp-action="Delete">Delete Tag</button>
-            </div>
-        </form>
-    </div>
-</div>
+</form>

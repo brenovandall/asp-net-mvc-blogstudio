@@ -3,48 +3,35 @@
 @{
 }
 
-<div class="container">
-    <div>
-        <h1 class="text-dark fs-1">Show All Posts - Adminstrator</h1>
-    </div>
-    @if (Model != null && Model.Any())
-    {
-        <table class="table">
-            <thead>
+<div class="mr-3.5 ml-3.5 mt-5">
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
+        <thead class="bg-gray-200 text-gray-700">
+            <tr>
+                <th class="py-2 px-4 border-b">ID</th>
+                <th class="py-2 px-4 border-b">Name</th>
+                <th class="py-2 px-4 border-b">Tags</th>
+                <th class="py-2 px-4 border-b"> </th>
+            </tr>
+        </thead>
+        <tbody class="text-gray-600">
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Tags</th>
-                    <th scope="col"> </th>
+                    <td class="py-2 px-4 border-b">@item.Id</td>
+                    <td class="py-2 px-4 border-b">@item.Title</td>
+                    <td class="py-2 px-4 border-b">
+                        @foreach (var itens in item.BlogTags)
+                        {
+                            <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">@itens.DisplayName</span>
+                        }
+                    </td>
+                    <td class="py-2 px-4 border-b">
+                        <a class="text-cyan-600" asp-area="" asp-controller="AdminBlogs" asp-action="Edit" asp-route-id="@item.Id">
+                            Edit
+                        </a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <th scope="col">@item.Id</th>
-                        <th scope="col">@item.Title</th>
-                        <th scope="col">
-                            @foreach (var tags in item.BlogTags)
-                            {
-                                <div class="d-flex">
-                                    <span class="badge bg-secondary gap-1 mb-1">@tags.DisplayName</span>
-                                </div>
-                            }
-                        </th>
-                        <th scope="col">
-                            <a asp-area="" asp-controller="AdminBlogs" asp-action="Edit" asp-route-id="@item.Id">
-                                Edit
-                            </a>
-                        </th>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p>There are no posts on database!</p>
-    }
-
+            }
+        </tbody>
+    </table>
 </div>
