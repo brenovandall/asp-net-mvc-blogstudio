@@ -5,12 +5,12 @@ using System.Net;
 
 namespace ProgrammerStudio.Web.Controllers;
 /*
-   ************************************************************************* 
-    THIS IS THE API CONTROLLER (CLOUDINARY PROVIDER) FOR UPLOAD IMAGE FILES
-   ************************************************************************* 
+   ********************************************************************
+    THIS IS THE API CONTROLLER (CLOUD PROVIDER) FOR UPLOAD IMAGE FILES
+   ********************************************************************
 */
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class ImageApiController : ControllerBase
 {
     private CloudImagesProvider _cloudImagesProvider; // this is the provider service

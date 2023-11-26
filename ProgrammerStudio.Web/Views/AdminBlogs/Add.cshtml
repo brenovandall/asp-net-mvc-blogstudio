@@ -110,7 +110,9 @@
 @section Scripts {
     <script>
         var editorText = new FroalaEditor('#content', {
-            imageUploadURL: '/api/imageapi'
+            imageUploadURL: '/api/imageapi',
+            imageUploadMethod: 'POST',
+            imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif']
         });
 
         const selectedImage = document.querySelector("#thumbnailImage"); 
