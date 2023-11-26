@@ -5,29 +5,36 @@
 
 
 <div class="mr-3.5 ml-3.5 mt-5">
-    <table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
-        <thead class="bg-gray-200 text-gray-700">
-            <tr>
-                <th class="py-2 px-4 border-b">ID</th>
-                <th class="py-2 px-4 border-b">Name</th>
-                <th class="py-2 px-4 border-b">Display Name</th>
-                <th class="py-2 px-4 border-b"> </th>
-            </tr>
-        </thead>
-        <tbody class="text-gray-600">
-            @foreach (var item in Model)
-            {
+    @if (Model != null)
+    {
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
+            <thead class="bg-gray-200 text-gray-700">
                 <tr>
-                    <td class="py-2 px-4 border-b">@item.Id</td>
-                    <td class="py-2 px-4 border-b">@item.Name</td>
-                    <td class="py-2 px-4 border-b">@item.DisplayName</td>
-                    <td class="py-2 px-4 border-b">
-                        <a class="text-cyan-600" asp-area="" asp-controller="AdminTags" asp-action="Edit" asp-route-id="@item.Id">
-                            Edit
-                        </a>
-                    </td>
+                    <th class="py-2 px-4 border-b">ID</th>
+                    <th class="py-2 px-4 border-b">Name</th>
+                    <th class="py-2 px-4 border-b">Display Name</th>
+                    <th class="py-2 px-4 border-b"> </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="text-gray-600">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="py-2 px-4 border-b">@item.Id</td>
+                        <td class="py-2 px-4 border-b">@item.Name</td>
+                        <td class="py-2 px-4 border-b">@item.DisplayName</td>
+                        <td class="py-2 px-4 border-b">
+                            <a class="text-cyan-600" asp-area="" asp-controller="AdminTags" asp-action="Edit" asp-route-id="@item.Id">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } else
+    {
+        <p>There is no tags on the database!</p>
+    }
+
 </div>

@@ -4,34 +4,42 @@
 }
 
 <div class="mr-3.5 ml-3.5 mt-5">
-    <table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
-        <thead class="bg-gray-200 text-gray-700">
-            <tr>
-                <th class="py-2 px-4 border-b">ID</th>
-                <th class="py-2 px-4 border-b">Name</th>
-                <th class="py-2 px-4 border-b">Tags</th>
-                <th class="py-2 px-4 border-b"> </th>
-            </tr>
-        </thead>
-        <tbody class="text-gray-600">
-            @foreach (var item in Model)
-            {
+
+    @if (Model != null)
+    {
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
+            <thead class="bg-gray-200 text-gray-700">
                 <tr>
-                    <td class="py-2 px-4 border-b">@item.Id</td>
-                    <td class="py-2 px-4 border-b">@item.Title</td>
-                    <td class="py-2 px-4 border-b">
-                        @foreach (var itens in item.BlogTags)
-                        {
-                            <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">@itens.DisplayName</span>
-                        }
-                    </td>
-                    <td class="py-2 px-4 border-b">
-                        <a class="text-cyan-600" asp-area="" asp-controller="AdminBlogs" asp-action="Edit" asp-route-id="@item.Id">
-                            Edit
-                        </a>
-                    </td>
+                    <th class="py-2 px-4 border-b">ID</th>
+                    <th class="py-2 px-4 border-b">Name</th>
+                    <th class="py-2 px-4 border-b">Tags</th>
+                    <th class="py-2 px-4 border-b"> </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="text-gray-600">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="py-2 px-4 border-b">@item.Id</td>
+                        <td class="py-2 px-4 border-b">@item.Title</td>
+                        <td class="py-2 px-4 border-b">
+                            @foreach (var itens in item.BlogTags)
+                            {
+                                <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">@itens.DisplayName</span>
+                            }
+                        </td>
+                        <td class="py-2 px-4 border-b">
+                            <a class="text-cyan-600" asp-area="" asp-controller="AdminBlogs" asp-action="Edit" asp-route-id="@item.Id">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } else
+    {
+        <p>There is no post on database!</p>
+    }
+
 </div>
