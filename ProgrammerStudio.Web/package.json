@@ -6,5 +6,8 @@
     "**/node_modules",
     "**/obj",
     "**/platforms"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^8.54.0"
+  }
 }

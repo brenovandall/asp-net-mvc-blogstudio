@@ -111,8 +111,7 @@
     <script>
         var editorText = new FroalaEditor('#content', {
             imageUploadURL: '/api/imageapi',
-            imageUploadMethod: 'POST',
-            imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif']
+            codeMirror: true
         });
 
         const selectedImage = document.querySelector("#thumbnailImage"); 
@@ -128,7 +127,7 @@
             await fetch('/api/imageapi', {
                 method: 'POST',
                 headers: {
-                    'Aceept': '*/*'
+                    'Accept': '*/*',
                 },
                 body: data
             }).then(response => response.json())

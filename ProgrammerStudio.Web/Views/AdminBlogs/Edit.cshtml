@@ -117,7 +117,8 @@
         var editorText = new FroalaEditor('#content', {
             imageUploadURL: '/api/imageapi',
             imageUploadMethod: 'POST',
-            imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif']
+            imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
+            pluginsEnabled: ['image', 'imageTUI']
         });
 
         const selectedImage = document.querySelector("#thumbnailImage");
@@ -133,7 +134,7 @@
             await fetch('/api/imageapi', {
                 method: 'POST',
                 headers: {
-                    'Aceept': '*/*'
+                    'Aceept': '*/*',
                 },
                 body: data
             }).then(response => response.json())

@@ -1,32 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models;
 using System.Diagnostics;
 
-namespace ProgrammerStudio.Web.Controllers
+namespace ProgrammerStudio.Web.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger;
+    private ApplicationDbContext _context;
+
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
     {
-        private readonly ILogger<HomeController> _logger;
+        _logger = logger;
+        _context = context;
+    }
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+    public async Task<IActionResult> Index()
+    {
+        var posts = await _context.Posts.Include(x => x.BlogTags).ToListAsync();
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View(posts);
+    }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
