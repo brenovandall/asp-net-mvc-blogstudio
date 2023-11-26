@@ -3,7 +3,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<section class="bg-gray-100 h-screen flex items-center">
+<section class="h-full items-center flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 py-7">
 
     <!-- Lado Esquerdo (Descrição) -->
     <div class="w-1/2 px-8">
@@ -22,7 +22,7 @@
 {
     @foreach (var item in Model)
     {
-        <div class="container mx-auto mt-8">
+        <div class="container mx-auto mt-10">
             <div class="bg-white max-w-4xl mx-auto rounded overflow-hidden shadow-lg mb-8">
                 <img class="w-full h-48 object-cover" src="@item.ImageUrl" alt="Imagem do Post">
                 <div class="px-6 py-4">
@@ -34,7 +34,7 @@
                     {
                         <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">@tags.DisplayName</span>
                     }
-                    <a href="#" class="text-blue-500 hover:underline">Leia Mais</a>
+                    <a class="text-blue-500 hover:underline" asp-area="" asp-controller="Home" asp-action="ShowDetails" asp-route-id="@item.Id">Leia Mais</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,35 @@
+﻿@model ProgrammerStudio.Web.Models.Domain.BlogPost
+@{
+}
+
+<div class="container mx-auto mt-8 mb-8">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-md shadow-md mb-8">
+        <!-- Título do Post -->
+        <h1 class="text-3xl font-bold mb-4">@Model.Title</h1>
+        <p class="text-xs text-gray-500 mb-4">@Model.PublishDate - @Model.Author</p>
+        <!-- Hashtags/Tags -->
+        <div class="mb-4">
+            @foreach (var tags in Model.BlogTags)
+            {
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">@tags.DisplayName</span>
+            }
+            <!-- Adicione mais tags conforme necessário -->
+        </div>
+        <!-- Thumbnail do Post -->
+        <img src="@Model.ImageUrl" alt="Thumbnail do Post" class="mb-4 rounded-md w-full h-64 object-cover">
+        <!-- Conteúdo do Post -->
+        <div class="text-gray-700 leading-relaxed">
+            <!-- Conteúdo Extensivo com Texto e Imagens -->
+            <div>
+                @Html.Raw(Model.Content)
+                
+            </div>
+            @* <img src="caminho-da-imagem.jpg" alt="Descrição da Imagem" class="my-4 rounded-md w-full h-auto"> *@
+            <!-- Adicione mais conteúdo conforme necessário -->
+        </div>
+        <!-- Descrição do Post -->
+@*         <div class="mt-4 text-gray-600">
+            <p>@Model.Description</p>
+        </div> *@
+    </div>
+</div>

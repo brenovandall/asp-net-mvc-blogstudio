@@ -24,6 +24,18 @@ public class HomeController : Controller
         return View(posts);
     }
 
+    public async Task<IActionResult> ShowDetails(Guid id)
+    {
+        var postSelected = _context.Posts.Include(x => x.BlogTags).FirstOrDefault(x => x.Id == id);
+
+        if (postSelected != null)
+        {
+            return View(postSelected);
+        }
+
+        return View(null);
+    }
+
     public IActionResult Privacy()
     {
         return View();
