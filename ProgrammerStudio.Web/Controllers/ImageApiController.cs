@@ -10,7 +10,7 @@ namespace ProgrammerStudio.Web.Controllers;
    ********************************************************************
 */
 [ApiController]
-[Route("api/[controller]")]
+[Route("/api/[controller]")]
 public class ImageApiController : ControllerBase
 {
     private CloudImagesProvider _cloudImagesProvider; // this is the provider service

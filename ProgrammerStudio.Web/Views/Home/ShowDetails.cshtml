@@ -6,7 +6,7 @@
     <div class="max-w-4xl mx-auto bg-white p-8 rounded-md shadow-md mb-8">
         <!-- Título do Post -->
         <h1 class="text-3xl font-bold mb-4">@Model.Title</h1>
-        <p class="text-xs text-gray-500 mb-4">@Model.PublishDate - @Model.Author</p>
+        <p class="text-xs text-gray-500 mb-4">@Model.PublishDate.ToShortDateString() - @Model.Author</p>
         <!-- Hashtags/Tags -->
         <div class="mb-4">
             @foreach (var tags in Model.BlogTags)

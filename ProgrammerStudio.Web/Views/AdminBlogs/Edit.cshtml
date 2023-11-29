@@ -29,7 +29,7 @@
                 <div class="relative mt-2 rounded-md shadow-sm">
                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                     </div>
-                    <textarea id="content" asp-for="@Model.Content"></textarea>
+                    <textarea id="fullContent" asp-for="@Model.Content"></textarea>
                     @* <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Type here" asp-for="@Model.Content"> *@
                 </div>
             </div>
@@ -114,11 +114,8 @@
 
 @section Scripts {
     <script>
-        var editorText = new FroalaEditor('#content', {
-            imageUploadURL: '/api/imageapi',
-            imageUploadMethod: 'POST',
-            imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
-            pluginsEnabled: ['image', 'imageTUI']
+        var editorText = new FroalaEditor('#fullContent', {
+            imageUploadURL: '/api/imageapi'
         });
 
         const selectedImage = document.querySelector("#thumbnailImage");
