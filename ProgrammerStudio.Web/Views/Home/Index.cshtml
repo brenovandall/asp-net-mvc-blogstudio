@@ -1,7 +1,9 @@
-﻿@model List<ProgrammerStudio.Web.Models.Domain.BlogPost>
+﻿@model ProgrammerStudio.Web.Models.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
+
+<!-- I NEED TO IMPLEMENT ALL THE TAGS SHOWING FUNCTIONALITY RIGHT HERE -->
 
 <section class="h-full items-center flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 py-7">
 
@@ -18,9 +20,9 @@
     </div>
 
 </section>
-@if (Model != null)
+@if (Model.BlogPosts != null)
 {
-    @foreach (var item in Model)
+    @foreach (var item in Model.BlogPosts)
     {
         <div class="container mx-auto mt-10">
             <div class="bg-white max-w-4xl mx-auto rounded overflow-hidden shadow-lg mb-8">
