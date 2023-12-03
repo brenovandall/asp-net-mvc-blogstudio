@@ -15,12 +15,13 @@ public class AuthDbContext : IdentityDbContext
     {
         base.OnModelCreating(builder);
 
-        var userId = "37fcd00d-418a-453f-a4cb-e8b271c22d9b";
-        var adminId = "deae99e7-6f6c-45e2-a03e-486ada611e21";
-        var superAdminId = "05990ca4-3541-4d69-abe3-192e46d2cfa8";
+        var userId = "37fcd00d-418a-453f-a4cb-e8b271c22d9b"; // thats the normal user id (guid format)
+        var adminId = "deae99e7-6f6c-45e2-a03e-486ada611e21"; // thats the admin user id (guid format)
+        var superAdminId = "05990ca4-3541-4d69-abe3-192e46d2cfa8"; // thats the super admiun user id (guid format)
 
         var roles = new List<IdentityRole>
         {
+            // +++++ creating each type of user ++++++
             new IdentityRole()
             {
                 Name = "admin",
@@ -46,7 +47,7 @@ public class AuthDbContext : IdentityDbContext
 
         builder.Entity<IdentityRole>().HasData(roles);
 
-
+        // the super admin creation
         var superAdminUser = new IdentityUser
         {
             UserName = "superadmin",
@@ -60,7 +61,7 @@ public class AuthDbContext : IdentityDbContext
 
         builder.Entity<IdentityUser>().HasData(superAdminUser);
 
-
+        // super admin has all other types of users auths....
         var superAdminRoles = new List<IdentityUserRole<string>>()
         {
             new IdentityUserRole<string>

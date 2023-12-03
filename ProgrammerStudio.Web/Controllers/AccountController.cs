@@ -8,10 +8,12 @@ public class AccountController : Controller
 {
 
     private UserManager<IdentityUser> _userManager;
+    private SignInManager<IdentityUser> _signInManager;
 
-    public AccountController(UserManager<IdentityUser> userManager)
+    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
     {
-        _userManager = userManager;
+        _userManager = userManager; // manager user with identity, so i can use methods like create user and stuff
+        _signInManager = signInManager; 
     }
 
     [HttpGet]
@@ -23,6 +25,8 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(AddAccountModel addAccountModel)
     {
+
+        // create a new user with identity framework
         var identityUser = new IdentityUser
         {
             UserName = addAccountModel.Username,
@@ -33,7 +37,7 @@ public class AccountController : Controller
 
         if (response.Succeeded)
         {
-            var role = await _userManager.AddToRoleAsync(identityUser, "user");
+            var role = await _userManager.AddToRoleAsync(identityUser, "user"); // add to role normal user
 
             if (role.Succeeded)
             {
@@ -42,5 +46,39 @@ public class AccountController : Controller
         }
 
         return View();
+    }
+
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+    {
+
+        // its the authentication of the user that is trying to login -- >
+        var responseSign = await _signInManager.PasswordSignInAsync(
+            loginViewModel.Username, 
+            loginViewModel.Password, 
+            false, 
+            false
+            );
+
+        if (responseSign != null && responseSign.Succeeded)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        return View();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+
+        return RedirectToAction("Index", "Home");
     }
 }

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,89 +12,64 @@
     @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProgrammerStudio.Web.styles.css" asp-append-version="true" /> *@
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
 </head>
 <body>
     <header>
-        <nav class="bg-gray-800">
-            <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div class="relative flex h-16 items-center justify-between">
-                    <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                        <!-- Mobile menu button-->
-                        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-white-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                            <span class="absolute -inset-0.5"></span>
-                            <span class="sr-only">Open main menu</span>
-                            <!--
-                              Icon when menu is closed.
-
-                              Menu open: "hidden", Menu closed: "block"
-                            -->
-                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                            <!--
-                              Icon when menu is open.
-
-                              Menu open: "block", Menu closed: "hidden"
-                            -->
-                            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="flex flex-1 justify-between sm:items-stretch sm:justify-between">
-                        <div class="flex flex-1 items-center sm:items-stretch sm:justify-between">
-                            <div class="flex flex-shrink-0 items-center">
-                                <a href="#" class="text-white text-2xl font-bold">PStudio</a>
-                            </div>
-                            <div class="hidden sm:ml-6 sm:block">
-                                <div class="flex space-x-4">
-                                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                    <a class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                    <div class="relative inline-block text-left">
-                                        <div class="flex">
-                                            <a class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex dropdownButton">
-                                                Administrator Functions
-                                                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                                </svg>
-                                            </a>
-                                        </div>
-
-
-
-                                        <!--
-                                          Dropdown menu, show/hide based on menu state.
-
-                                          Entering: "transition ease-out duration-100"
-                                            From: "transform opacity-0 scale-95"
-                                            To: "transform opacity-100 scale-100"
-                                          Leaving: "transition ease-in duration-75"
-                                            From: "transform opacity-100 scale-100"
-                                            To: "transform opacity-0 scale-95"
-                                        -->
-                                        <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dropdownMenu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                                            <div class="py-1" role="none">
-                                                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0" asp-area="" asp-controller="AdminTags" asp-action="Add">Add Tags</a>
-                                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" asp-area="" asp-controller="AdminTags" asp-action="List">Show All Tags</a>
-                                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="Add">Create a Post</a>
-                                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="List">Show All Posts</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        <nav class="bg-gray-800 p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <div>
+                    <a class="text-white font-bold text-lg" asp-area="" asp-controller="Home" asp-action="Index">PStudio</a>
+                </div>
+                <div class="space-x-4">
+                    <a class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <div class="relative inline-block text-left">
+                        <div class="flex">
+                            <a class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex dropdownButton">
+                                Administrator Functions
+                                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dropdownMenu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div class="py-1" role="none">
+                                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0" asp-area="" asp-controller="AdminTags" asp-action="Add">Add Tags</a>
+                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" asp-area="" asp-controller="AdminTags" asp-action="List">Show All Tags</a>
+                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="Add">Create a Post</a>
+                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="List">Show All Posts</a>
                             </div>
                         </div>
-                        
-                        <div>
+                    </div>
+                </div>
+                <div>
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <div class="flex items-center">
+                            <span class="text-white mr-1">@User?.Identity?.Name</span>
+                            <a class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex dropdownButton"
+                               asp-area="" asp-controller="Account" asp-action="Logout">
+                                <span class="material-symbols-outlined">
+                                    logout
+                                </span>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="flex">
+                            <a class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex dropdownButton"
+                               asp-area="" asp-controller="Account" asp-action="Login">
+                                Login
+                            </a>
                             <a class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex dropdownButton"
                                asp-area="" asp-controller="Account" asp-action="Register">
                                 Register Account
                             </a>
-                        </div>
-                        
-                    </div>
+                        </div>  
+                    }
                 </div>
             </div>
         </nav>
