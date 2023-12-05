@@ -49,9 +49,14 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public IActionResult Login()
+    public IActionResult Login(string ReturnUrl)
     {
-        return View();
+        LoginViewModel loginViewModel = new()
+        {
+            ReturnUrl = ReturnUrl,
+        };
+
+        return View(loginViewModel);
     }
 
     [HttpPost]
@@ -68,6 +73,11 @@ public class AccountController : Controller
 
         if (responseSign != null && responseSign.Succeeded)
         {
+            if (!string.IsNullOrWhiteSpace(loginViewModel.ReturnUrl))
+            {
+                return RedirectToPage(loginViewModel.ReturnUrl);
+            }
+
             return RedirectToAction("Index", "Home");
         }
 

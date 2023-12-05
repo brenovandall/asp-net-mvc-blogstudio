@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -8,6 +9,7 @@ using ProgrammerStudio.Web.Models.ViewModels;
 
 namespace ProgrammerStudio.Web.Controllers;
 
+[Authorize(Roles = "admin")]
 public class AdminTagsController : Controller
 {
     // mapper and context attributes -- > 

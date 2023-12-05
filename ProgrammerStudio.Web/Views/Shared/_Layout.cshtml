@@ -23,26 +23,29 @@
                     <a class="text-white font-bold text-lg" asp-area="" asp-controller="Home" asp-action="Index">PStudio</a>
                 </div>
                 <div class="space-x-4">
-                    <a class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    <div class="relative inline-block text-left">
-                        <div class="flex">
-                            <a class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex dropdownButton">
-                                Administrator Functions
-                                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dropdownMenu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0" asp-area="" asp-controller="AdminTags" asp-action="Add">Add Tags</a>
-                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" asp-area="" asp-controller="AdminTags" asp-action="List">Show All Tags</a>
-                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="Add">Create a Post</a>
-                                <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="List">Show All Posts</a>
+                    <a class="hover:bg-gray-700 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                        {
+                            <div class="relative inline-block text-left">
+                                <div class="flex">
+                                    <a class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex dropdownButton">
+                                        Administrator Functions
+                                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dropdownMenu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                    <div class="py-1" role="none">
+                                        <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0" asp-area="" asp-controller="AdminTags" asp-action="Add">Add Tags</a>
+                                        <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" asp-area="" asp-controller="AdminTags" asp-action="List">Show All Tags</a>
+                                        <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="Add">Create a Post</a>
+                                        <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="List">Show All Posts</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        }
                 </div>
                 <div>
                     @if (signInManager.IsSignedIn(User))

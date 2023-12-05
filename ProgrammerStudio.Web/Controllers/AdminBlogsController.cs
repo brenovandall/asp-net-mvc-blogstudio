@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration.Annotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using ProgrammerStudio.Web.Models.ViewModels;
 
 namespace ProgrammerStudio.Web.Controllers;
 
+[Authorize(Roles = "admin")]
 public class AdminBlogsController : Controller
 {
     private ApplicationDbContext _context;
