@@ -1,4 +1,4 @@
-﻿@model ProgrammerStudio.Web.Models.Domain.BlogPost
+﻿@model ProgrammerStudio.Web.Models.ViewModels.ShowDetailsViewModel
 @{
 }
 
@@ -7,6 +7,9 @@
         <!-- Título do Post -->
         <h1 class="text-3xl font-bold mb-4">@Model.Title</h1>
         <p class="text-xs text-gray-500 mb-4">@Model.PublishDate.ToShortDateString() - @Model.Author</p>
+        <div class="text-xs text-gray-500 mb-4">
+            <span>@Model.Likes</span> likes
+        </div>
         <!-- Hashtags/Tags -->
         <div class="mb-4">
             @foreach (var tags in Model.BlogTags)

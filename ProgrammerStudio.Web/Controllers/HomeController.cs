@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models;
 using ProgrammerStudio.Web.Models.ViewModels;
+using ProgrammerStudio.Web.Service;
 using System.Diagnostics;
 
 namespace ProgrammerStudio.Web.Controllers;
@@ -11,11 +12,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private ApplicationDbContext _context;
+    private GetLikes _getlikes;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, GetLikes getlikes)
     {
         _logger = logger;
         _context = context;
+        _getlikes = getlikes;
     }
 
     public async Task<IActionResult> Index()
@@ -42,7 +45,24 @@ public class HomeController : Controller
 
         if (postSelected != null)
         {
-            return View(postSelected);
+            var likes = _getlikes.GetAllTheLikesOfThePost(postSelected.Id);
+
+            var newModel = new ShowDetailsViewModel()
+            {
+                Id = postSelected.Id,
+                Heading = postSelected.Heading,
+                Title = postSelected.Title,
+                Content = postSelected.Content,
+                Description = postSelected.Description,
+                ImageUrl = postSelected.ImageUrl,
+                UrlHandle = postSelected.UrlHandle,
+                PublishDate = postSelected.PublishDate,
+                Author = postSelected.Author,
+                Visible = postSelected.Visible,
+                BlogTags = postSelected.BlogTags,
+                Likes = await likes
+            };
+            return View(newModel);
         }
 
         return View(null);

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProgrammerStudio.Web.Data;
+using ProgrammerStudio.Web.Service;
 using ProgrammerStudio.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // automapper
 
 builder.Services.AddScoped<CloudImagesProvider>();
+builder.Services.AddScoped<GetLikes>();
 
 var app = builder.Build();
 
