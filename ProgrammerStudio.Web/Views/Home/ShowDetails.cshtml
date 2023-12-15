@@ -1,4 +1,9 @@
-﻿@model ProgrammerStudio.Web.Models.ViewModels.ShowDetailsViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> _signInManager
+@inject UserManager<IdentityUser> _userManager
+
+
+@model ProgrammerStudio.Web.Models.ViewModels.ShowDetailsViewModel
 @{
 }
 
@@ -8,7 +13,21 @@
         <h1 class="text-3xl font-bold mb-4">@Model.Title</h1>
         <p class="text-xs text-gray-500 mb-4">@Model.PublishDate.ToShortDateString() - @Model.Author</p>
         <div class="text-xs text-gray-500 mb-4">
-            <span>@Model.Likes</span> likes
+            <div class="flex">
+                @if (_signInManager.IsSignedIn(User))
+                {
+                    <div class="mr-1">
+
+                        <a id="like-btn">
+                            <i class="bi bi-heart" style="cursor: pointer;"></i>
+                        </a>
+                    </div>
+                }
+                <div>
+                    <span id="likes">@Model.Likes</span> likes
+                </div>
+            </div>
+            
         </div>
         <!-- Hashtags/Tags -->
         <div class="mb-4">
@@ -36,3 +55,47 @@
         </div> *@
     </div>
 </div>
+
+
+@section Scripts {
+
+    <script>
+
+        const likeBtn = document.querySelector("#like-btn");
+        const totalLikes = document.querySelector("#likes");
+
+        async function getTotalLikes() {
+            fetch('/api/Likes/@Model.Id/totallikes', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                }
+            }).then(data => data.json())
+                .then(result => totalLikes.innerHTML = result
+                );
+        } 
+
+        async function addLike() {
+            fetch('/api/Likes/Likes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                },
+                body: JSON.stringify({ 
+                    BlogId: '@Model.Id', 
+                    UserId: '@_userManager.GetUserId(User)' 
+                } )
+            }).then(() => {
+                likeBtn.innerHTML = '<i class="bi bi-heart-fill""></i>';
+                likeBtn.removeEventListener('click', addLike);
+                getTotalLikes();
+            })
+        }
+
+        likeBtn.addEventListener('click', addLike);
+
+    </script>
+
+}
