@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models.Domain;
 using ProgrammerStudio.Web.Models.ViewModels;
@@ -21,11 +22,12 @@ public class LikesController : ControllerBase
         _context = context;
     }
 
+    // here, is the step when the user likes the post
     [HttpPost]
     [Route("AddLikes")]
-    public async Task<IActionResult> AddLike([FromBody] AddLikeViewModel addLikeViewModel)
+    public async Task<IActionResult> AddLike([FromBody] AddLikeViewModel addLikeViewModel) // comes from body of requisition
     {
-
+        // so i create a new blog post like, where has the post and user ID, to specify the blog and user that had be liked...  
         var like = new BlogPostLike()
         {
             PostId = addLikeViewModel.BlogId,
@@ -40,10 +42,10 @@ public class LikesController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{PostId:Guid}/totallikes")]
-    public async Task<IActionResult> GetTotalLikes([FromRoute] Guid postId)
+    [Route("{PostId:Guid}/totallikes")] // route contains the post id, so i can search for the post later on param
+    public async Task<IActionResult> GetTotalLikes([FromRoute] Guid postId) // getting the post id from the route i had mentioned
     {
-        var totalLikes = await _context.Likes.CountAsync(x => x.PostId == postId);
+        var totalLikes = await _context.Likes.CountAsync(x => x.PostId == postId); // so it gets the count of lines and returns as number if likes
 
         return Ok(totalLikes);
     }

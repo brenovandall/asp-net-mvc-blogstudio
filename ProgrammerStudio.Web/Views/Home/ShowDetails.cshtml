@@ -61,10 +61,12 @@
 
     <script>
 
-        const likeBtn = document.querySelector("#like-btn");
-        const totalLikes = document.querySelector("#likes");
-
+        const likeBtn = document.querySelector("#like-btn"); // button for like (heart icon)
+        const totalLikes = document.querySelector("#likes"); // count of likes
+        
+        // FUNCTION THAT GETS ALL THE LIKES OF SPECIFIC POST
         async function getTotalLikes() {
+            // right here, user makes que requisition and the id of model is included at its fetch
             fetch('/api/Likes/@Model.Id/totallikes', {
                 method: 'GET',
                 headers: {
@@ -72,24 +74,27 @@
                     'Accept': '*/*'
                 }
             }).then(data => data.json())
-                .then(result => totalLikes.innerHTML = result
+                .then(result => totalLikes.innerHTML = result // gets the result of requisition (count of likes) and fills the html element
                 );
-        } 
+        }
 
+        // FUNCTION THAT ADD A LIKE OF SPECIFIC POST
         async function addLike() {
+            // right here, user makes que requisition to send the like
             fetch('/api/Likes/AddLikes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': '*/*'
                 },
-                body: JSON.stringify({ 
+                body: JSON.stringify({ // body contains the id if the blog and user id 
                     BlogId: '@Model.Id', 
                     UserId: '@_userManager.GetUserId(User)' 
                 } )
             }).then(() => {
+                // so when the uiser likes the post, the icon changes for a filled heart
                 likeBtn.innerHTML = '<i class="bi bi-heart-fill"></i>';
-                likeBtn.removeEventListener('click', addLike);
+                likeBtn.removeEventListener('click', addLike); // and removes the event on this, so once liked, he cant like it again
                 getTotalLikes();
             })
         }
