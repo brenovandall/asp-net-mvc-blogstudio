@@ -36,7 +36,7 @@
                     {
                         <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">@tags.DisplayName</span>
                     }
-                    <a class="text-blue-500 hover:underline" asp-area="" asp-controller="Home" asp-action="ShowDetails" asp-route-handle="@item.UrlHandle">Leia Mais</a>
+                    <a class="text-blue-500 hover:underline" asp-area="" asp-controller="Home" asp-action="ShowDetails" asp-route-handle="@item.UrlHandle" asp-route-id="@item.Id">Leia Mais</a>
                 </div>
             </div>
         </div>

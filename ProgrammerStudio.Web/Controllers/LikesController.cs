@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models.Domain;
 using ProgrammerStudio.Web.Models.ViewModels;
@@ -21,7 +22,7 @@ public class LikesController : ControllerBase
     }
 
     [HttpPost]
-    [Route("Likes")]
+    [Route("AddLikes")]
     public async Task<IActionResult> AddLike([FromBody] AddLikeViewModel addLikeViewModel)
     {
 
@@ -39,10 +40,10 @@ public class LikesController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{BlogId:Guid}/totallikes")]
+    [Route("{PostId:Guid}/totallikes")]
     public async Task<IActionResult> GetTotalLikes([FromRoute] Guid postId)
     {
-        var totalLikes = await _getAllTheLikes.GetAllTheLikesOfThePost(postId);
+        var totalLikes = await _context.Likes.CountAsync(x => x.PostId == postId);
 
         return Ok(totalLikes);
     }

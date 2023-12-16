@@ -77,7 +77,7 @@
         } 
 
         async function addLike() {
-            fetch('/api/Likes/Likes', {
+            fetch('/api/Likes/AddLikes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,7 +88,7 @@
                     UserId: '@_userManager.GetUserId(User)' 
                 } )
             }).then(() => {
-                likeBtn.innerHTML = '<i class="bi bi-heart-fill""></i>';
+                likeBtn.innerHTML = '<i class="bi bi-heart-fill"></i>';
                 likeBtn.removeEventListener('click', addLike);
                 getTotalLikes();
             })
