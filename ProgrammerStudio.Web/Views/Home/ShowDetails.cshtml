@@ -63,6 +63,33 @@
 @*         <div class="mt-4 text-gray-600">
             <p>@Model.Description</p>
         </div> *@
+
+        <div class="mt-8">
+            <hr class="py-3" />
+            <h2 class="text-2xl font-semibold mb-4">Comentários</h2>
+
+            <!-- Formulário para adicionar comentários -->
+            <form iclass="mb-4" method="post">
+                <div class="flex items-center space-x-4">
+                    <input placeholder="Escreva seu comentário" class="px-3 py-2 border rounded-md w-3/4" asp-for="@Model.CommentContent"></input>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md" asp-area="" asp-controller="Home" asp-action="ShowDetails">Adicionar Comentário</button>
+                    <input type="hidden" asp-for="@Model.Id" />
+                    <input type="hidden" asp-for="@Model.UrlHandle" />
+                </div>
+            </form>
+
+            <!-- Lista de Comentários -->
+            <div class="bg-white p-4 rounded-md shadow-md mt-4">
+                <div class="flex items-center mb-2">
+
+                    <div >
+                        <h3 class="text-lg font-semibold">Nome do Autor</h3>
+                        <p class="text-gray-500 text-sm">Data do Comentário</p>
+                    </div>
+                </div>
+                <p class="text-gray-800">Conteúdo do comentário Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+            </div>
+        </div>
     </div>
 </div>
 

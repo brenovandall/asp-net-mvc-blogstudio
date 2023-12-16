@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models;
+using ProgrammerStudio.Web.Models.Domain;
 using ProgrammerStudio.Web.Models.ViewModels;
 using ProgrammerStudio.Web.Service;
 using System.Diagnostics;
@@ -43,6 +45,7 @@ public class HomeController : Controller
         return View(modelWithTwiceResult);
     }
 
+    [HttpGet]
     public async Task<IActionResult> ShowDetails(string handle)
     {
         var likedOrNot = false;
@@ -88,6 +91,30 @@ public class HomeController : Controller
         }
 
         return View(null);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ShowDetails(ShowDetailsViewModel showDetailsViewModel)
+    {
+        if (_signInManager.IsSignedIn(User))
+        {
+            var userid = Guid.Parse(_userManager.GetUserId(User));
+
+            var comment = new Comment()
+            {
+                Content = showDetailsViewModel.CommentContent,
+                PostId = showDetailsViewModel.Id,
+                UserId = userid,
+                CommentDate = DateTime.Now
+            };
+
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ShowDetails", "Home", new { handle = showDetailsViewModel.UrlHandle });
+        }
+        return Forbid();
+
     }
 
     public IActionResult Privacy()

@@ -12,5 +12,6 @@ namespace ProgrammerStudio.Web.Data
         public DbSet<BlogPost> Posts { get; set; }
         public DbSet<BlogTag> Tags { get; set; }
         public DbSet<BlogPostLike> Likes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

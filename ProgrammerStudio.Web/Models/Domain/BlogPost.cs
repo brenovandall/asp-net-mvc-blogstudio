@@ -13,4 +13,5 @@ public class BlogPost
     public string Author { get; set; }
     public bool Visible { get; set; }
     public ICollection<BlogTag> BlogTags { get; set; } // many for many relation with tags
+    public ICollection<Comment> Comments { get; set; }
 }
