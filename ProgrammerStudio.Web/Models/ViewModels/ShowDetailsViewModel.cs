@@ -16,4 +16,5 @@ public class ShowDetailsViewModel
     public bool Visible { get; set; }
     public ICollection<BlogTag> BlogTags { get; set; } // many for many relation with tags
     public int Likes { get; set; }
+    public bool Liked { get; set; }
 }

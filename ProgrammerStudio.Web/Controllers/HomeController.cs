@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models;
@@ -13,12 +14,16 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private ApplicationDbContext _context;
     private GetLikes _getlikes;
+    private SignInManager<IdentityUser> _signInManager;
+    private UserManager<IdentityUser> _userManager;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, GetLikes getlikes)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, GetLikes getlikes, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
     {
         _logger = logger;
         _context = context;
         _getlikes = getlikes;
+        _signInManager = signInManager;
+        _userManager = userManager;
     }
 
     public async Task<IActionResult> Index()
@@ -40,8 +45,24 @@ public class HomeController : Controller
 
     public async Task<IActionResult> ShowDetails(string handle)
     {
+        var likedOrNot = false;
         // get the url handle and compares with some data stored --- >>>>
         var postSelected = _context.Posts.Include(x => x.BlogTags).FirstOrDefault(x => x.UrlHandle == handle);
+
+        var userid = _userManager.GetUserId(User);
+
+        if (_signInManager.IsSignedIn(User))
+        {
+            var likesOfPost = await _context.Likes.Where(x => x.PostId == postSelected.Id && x.UserId == Guid.Parse(userid)).ToListAsync();
+
+            if (userid != null)
+            {
+                if (likesOfPost.Any())
+                {
+                    likedOrNot = true;
+                }
+            }
+        }
 
         if (postSelected != null)
         {
@@ -60,7 +81,8 @@ public class HomeController : Controller
                 Author = postSelected.Author,
                 Visible = postSelected.Visible,
                 BlogTags = postSelected.BlogTags,
-                Likes = await likes
+                Likes = await likes,
+                Liked = likedOrNot
             };
             return View(newModel);
         }

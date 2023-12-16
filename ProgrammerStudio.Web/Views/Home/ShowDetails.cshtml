@@ -16,12 +16,22 @@
             <div class="flex">
                 @if (_signInManager.IsSignedIn(User))
                 {
-                    <div class="mr-1">
-
-                        <a id="like-btn">
-                            <i class="bi bi-heart" style="cursor: pointer;"></i>
-                        </a>
-                    </div>
+                    @if (Model.Liked == true)
+                    {
+                        <div class="mr-1">
+                            <a>
+                                <i class="bi bi-heart-fill"></i>
+                            </a>
+                        </div>
+                    } else
+                    {
+                        <div class="mr-1">
+                            <a id="like-btn">
+                                <i class="bi bi-heart" style="cursor: pointer;"></i>
+                            </a>
+                        </div>
+                    }
+                    
                 }
                 <div>
                     <span id="likes">@Model.Likes</span> likes
