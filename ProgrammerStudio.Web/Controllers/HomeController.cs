@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models;
 using ProgrammerStudio.Web.Models.Domain;
@@ -18,14 +19,16 @@ public class HomeController : Controller
     private GetLikes _getlikes;
     private SignInManager<IdentityUser> _signInManager;
     private UserManager<IdentityUser> _userManager;
+    private readonly AuthDbContext _authcontext;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, GetLikes getlikes, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, GetLikes getlikes, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, AuthDbContext authcontext)
     {
         _logger = logger;
         _context = context;
         _getlikes = getlikes;
         _signInManager = signInManager;
         _userManager = userManager;
+        _authcontext = authcontext;
     }
 
     public async Task<IActionResult> Index()
@@ -53,6 +56,24 @@ public class HomeController : Controller
         var postSelected = _context.Posts.Include(x => x.BlogTags).FirstOrDefault(x => x.UrlHandle == handle);
 
         var userid = _userManager.GetUserId(User);
+
+        var comme = _context.Comments;
+
+        //var commentsOfThePost = await _context.Comments.Where(x => x.PostId == postSelected.Id).ToList();
+
+        var listOfComments = new List<CommentViewModel>();
+
+        foreach(var comment in comme.Where(x => x.PostId == postSelected.Id))
+        {
+            var com = new CommentViewModel()
+            {
+                Content = comment.Content,
+                CommentAdded = comment.CommentDate,
+                UserName = _authcontext.Users.FirstOrDefault(x => x.Id == comment.UserId.ToString()).UserName
+            };
+
+            listOfComments.Add(com);
+        }
 
         if (_signInManager.IsSignedIn(User))
         {
@@ -85,8 +106,10 @@ public class HomeController : Controller
                 Visible = postSelected.Visible,
                 BlogTags = postSelected.BlogTags,
                 Likes = await likes,
-                Liked = likedOrNot
+                Liked = likedOrNot,
+                Comments = listOfComments
             };
+
             return View(newModel);
         }
 

@@ -18,4 +18,5 @@ public class ShowDetailsViewModel
     public int Likes { get; set; }
     public bool Liked { get; set; }
     public string CommentContent { get; set; }
+    public ICollection<CommentViewModel>? Comments { get; set; }
 }
