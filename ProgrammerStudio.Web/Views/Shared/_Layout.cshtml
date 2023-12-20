@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> signInManager
-
+@inject UserManager<IdentityUser> userManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +43,10 @@
                                         <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" asp-area="" asp-controller="AdminTags" asp-action="List">Show All Tags</a>
                                         <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="Add">Create a Post</a>
                                         <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminBlogs" asp-action="List">Show All Posts</a>
+                                        @if (User.IsInRole("superAdmin"))
+                                        {
+                                            <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" asp-area="" asp-controller="AdminUser" asp-action="List">Show All Users</a>
+                                        }
                                     </div>
                                 </div>
                             </div>

@@ -1,0 +1,45 @@
+﻿@model ProgrammerStudio.Web.Models.ViewModels.UserViewModel
+@{
+}
+
+<div class="flex justify-center space-y-12" style="margin-right:15%;margin-left:15%;margin-top:5%;">
+    <div class="border-b border-gray-900/10 pb-12">
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Show All The Users - Super Adminstrator</h2>
+
+        <div class="mt-5">
+            @if (Model != null)
+            {
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
+                    <thead class="bg-gray-200 text-gray-700">
+                        <tr>
+                            <th class="py-2 px-4 border-b">Id</th>
+                            <th class="py-2 px-4 border-b">Username</th>
+                            <th class="py-2 px-4 border-b">Email</th>
+                            <th class="py-2 px-4 border-b"> </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600">
+                        @foreach (var item in Model.Users)
+                        {
+                            <tr>
+                                <td class="py-2 px-4 border-b">@item.Id</td>
+                                <td class="py-2 px-4 border-b">@item.Username</td>
+                                <td class="py-2 px-4 border-b">@item.Email</td>
+                                <td class="py-2 px-4 border-b">
+                                    <a class="text-cyan-600" asp-area="" asp-controller="AdminTags" asp-action="Edit" asp-route-id="@item.Id">
+                                        Edit
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>There is no tags on the database!</p>
+            }
+
+        </div>
+    </div>
+</div>
