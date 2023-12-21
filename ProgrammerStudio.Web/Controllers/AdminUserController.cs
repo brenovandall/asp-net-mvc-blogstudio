@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProgrammerStudio.Web.Data;
 using ProgrammerStudio.Web.Models.ViewModels;
 
@@ -11,12 +12,16 @@ public class AdminUserController : Controller
 {
     private readonly AuthDbContext _authcontext;
     private UserManager<IdentityUser> _userManager;
+    private SignInManager<IdentityUser> _signInManager;
 
-    public AdminUserController(AuthDbContext context)
+    public AdminUserController(AuthDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
     {
         _authcontext = context;
+        _userManager = userManager;
+        _signInManager = signInManager;
     }
 
+    [HttpGet]
     public async Task<IActionResult> List()
     {
         var users = _authcontext.Users.ToList();
@@ -46,4 +51,38 @@ public class AdminUserController : Controller
 
         return View(userViewModel);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> List(UserViewModel userViewModel)
+    {
+        if (userViewModel != null)
+        {
+            var user = new IdentityUser()
+            {
+                UserName = userViewModel.Username,
+                Email = userViewModel.Email,
+                NormalizedEmail = userViewModel.Email.ToUpper(),
+                NormalizedUserName = userViewModel.Username.ToUpper()
+            };
+
+            var response = await _userManager.CreateAsync(user, userViewModel.Password);
+
+            if (response.Succeeded)
+            {
+                if (userViewModel.IsRole == true)
+                {
+                    var role = await _userManager.AddToRoleAsync(user, "admin");
+                } else
+                {
+                    var role = await _userManager.AddToRoleAsync(user, "user");
+                }
+
+                return RedirectToAction("List");
+            }
+
+        }
+
+        return View(null);
+    }
+
 }

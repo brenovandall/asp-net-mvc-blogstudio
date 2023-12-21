@@ -6,6 +6,82 @@
     <div class="border-b border-gray-900/10 pb-12">
         <h2 class="text-base font-semibold leading-7 text-gray-900">Show All The Users - Super Adminstrator</h2>
 
+        <div class="mt-4">
+            <!-- Trigger button -->
+            <button id="openModalButton" class="rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onclick="openModal()">Create User</button>
+
+            <!-- Modal container -->
+            <div id="myModal" class="modal fixed hidden inset-0 z-50 overflow-auto bg-smoke flex items-center justify-center">
+                <!-- Modal content -->
+                <div class="modal-content bg-white w-64 p-1 rounded shadow-lg ">
+                    <!-- Modal header -->
+                    <div class="flex justify-end mb-4">
+                        <div>
+                            <!-- Close button -->
+                            <button id="closeModalButton" class="text-gray-600 hover:text-gray-800">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                    </div>
+                    <div class=" mb-4">
+                        <!-- Modal content goes here -->
+                        <form method="post">
+                            <div class="flex justify-center space-y-12" style="margin-right:15%;margin-left:15%;margin-bottom:1%;">
+                                <div class="border-b border-gray-900/10 pb-12">
+                                    <h2 class="text-base font-semibold leading-7 text-gray-900">Add Users - Super Administrator</h2>
+                                    <p class="mt-1 text-sm leading-6 text-gray-600">Here, as an administrator, you can add new tags that will be displayed and used in posts.</p>
+
+                                    <div class="mt-5">
+                                        <label class="block text-sm font-medium leading-6 text-gray-900">Username:</label>
+                                        <div class="relative mt-2 rounded-md shadow-sm">
+                                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                            </div>
+                                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Type here" asp-for="@Model.Username">
+                                        </div>
+                                    </div>
+                                    <div class="mt-5">
+                                        <label class="block text-sm font-medium leading-6 text-gray-900">Email:</label>
+                                        <div class="relative mt-2 rounded-md shadow-sm">
+                                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                            </div>
+                                            <input type="email" class="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Type here" asp-for="@Model.Email">
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <label class="block text-sm font-medium leading-6 text-gray-900">Password:</label>
+                                        <div class="relative mt-2 rounded-md shadow-sm">
+                                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                            </div>
+                                            <input type="password" class="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Type here" asp-for="@Model.Password">
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 flex">
+                                        <input type="checkbox" id="myCheckbox" class="checked:bg-blue-500 checked:border-transparent" checked disabled  />
+                                        <label for="myCheckbox" class="ml-3">
+                                            User Role
+                                        </label>
+                                    </div>
+                                    <div class="mt-2 flex">
+                                        <input type="checkbox" id="myCheckbox" class="checked:bg-blue-500 checked:border-transparent" asp-for="@Model.IsRole" />
+                                        <label for="myCheckbox" class="ml-3">
+                                            Admin Role
+                                        </label>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button type="submit" asp-area="" asp-controller="AdminUser" asp-action="List" class="rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create User</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
         <div class="mt-5">
             @if (Model != null)
             {
@@ -43,3 +119,48 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+
+    <script>
+        // Get references to modal and buttons
+        const modal = document.getElementById('myModal');
+        const openModalButton = document.getElementById('openModalButton');
+        const closeModalButton = document.getElementById('closeModalButton');
+
+        // Function to open the modal
+        function openModal() {
+          modal.classList.remove('hidden');
+        }
+
+        // Function to close the modal
+        function closeModal() {
+          modal.classList.add('hidden');
+        }
+
+        // Event listeners
+        openModalButton.addEventListener('click', openModal);
+        closeModalButton.addEventListener('click', closeModal);
+    </script>
+
+}
+
+@section Styles {
+
+    <style>
+        #myModal {
+            background: linear-gradient(90deg, rgba(0,0,0,0.7987570028011204) 0%, rgba(9,15,125,1) 0%, rgba(0,0,0,0.7511379551820728) 0%, rgba(9,9,121,0.227328431372549) 50%, rgba(0,0,0,0.7147233893557423) 100%, rgba(0,0,0,1) 100%);
+            box-shadow: 15px 15px 15px #000;
+        }
+
+        .modal-content {
+            width: 60%;
+            min-height: 80vh;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+
+}
