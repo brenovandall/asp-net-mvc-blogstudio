@@ -102,9 +102,13 @@
                                 <td class="py-2 px-4 border-b">@item.Username</td>
                                 <td class="py-2 px-4 border-b">@item.Email</td>
                                 <td class="py-2 px-4 border-b">
-                                    <a class="text-cyan-600" asp-area="" asp-controller="AdminTags" asp-action="Edit" asp-route-id="@item.Id">
-                                        Edit
-                                    </a>
+                                    <form method="post">
+                                        <button type="submit" asp-area="" asp-controller="AdminUser" asp-action="Delete" asp-route-id="@item.Id" class="rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                             Delete
+                                        </button>
+                                        
+                                    </form>
+                                   
                                 </td>
                             </tr>
                         }

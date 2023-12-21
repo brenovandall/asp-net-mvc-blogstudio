@@ -85,4 +85,20 @@ public class AdminUserController : Controller
         return View(null);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Delete(Guid? id)
+    {
+        var userFromDatabase = await _authcontext.Users.FirstOrDefaultAsync(x => x.Id == id.ToString());
+
+        if (userFromDatabase != null)
+        {
+            _authcontext.Users.Remove(userFromDatabase);
+
+            _authcontext.SaveChanges();
+
+            return RedirectToAction("List");
+        }
+
+        return View(null);
+    }
 }
